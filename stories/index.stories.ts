@@ -1,60 +1,28 @@
-import { html, TemplateResult } from "lit";
-import "../src/launch-process.js";
+import type { Meta, StoryObj } from "@storybook/web-components";
+import { html } from "lit";
+import "../src/index.js";
 
 export default {
-  title: "LaunchProcess",
-  component: "launch-process",
-  argTypes: {
-    header: { control: "text" },
-    counter: { control: "number" },
-    textColor: { control: "color" },
-  },
+  component: "conditional-section",
+} satisfies Meta;
+
+type Story = StoryObj;
+
+export const DefaultsToDontKnow: Story = {
+  render: () => html`
+    <launch-process>
+      <conditional-section>Section content</conditional-section>
+    </launch-process>
+  `,
 };
 
-interface Story<T> {
-  (_args: T): TemplateResult;
-  args?: Partial<T>;
-  argTypes?: Record<string, unknown>;
-}
-
-interface ArgTypes {
-  header?: string;
-  counter?: number;
-  textColor?: string;
-  slot?: TemplateResult;
-}
-
-const Template: Story<ArgTypes> = ({
-  header = "Hello world",
-  counter = 5,
-  textColor,
-  slot,
-}: ArgTypes) => html`
-  <launch-process
-    style="--launch-process-text-color: ${textColor || "black"}"
-    .header=${header}
-    .counter=${counter}
-  >
-    ${slot}
-  </launch-process>
-`;
-
-export const Regular = Template.bind({});
-
-export const CustomHeader = Template.bind({});
-CustomHeader.args = {
-  header: "My header",
-};
-
-export const CustomCounter = Template.bind({});
-CustomCounter.args = {
-  counter: 123456,
-};
-
-export const SlottedContent = Template.bind({});
-SlottedContent.args = {
-  slot: html`<p>Slotted content</p>`,
-};
-SlottedContent.argTypes = {
-  slot: { table: { disable: true } },
+export const ShowsWhenSettingIsYes: Story = {
+  render: () => html`
+    <launch-process>
+      <launch-setting name="setting"></launch-setting>
+      <conditional-section condition="setting=yes"
+        >Section content</conditional-section
+      >
+    </launch-process>
+  `,
 };
