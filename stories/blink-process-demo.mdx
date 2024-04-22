@@ -148,6 +148,7 @@ or implementation.
   <option value="remove">That a feature has been removed from the web platform</option>
 </launch-setting>
 
+<conditional-section condition="type=add">
 ## The Chromium process to launch a new feature
 
 ### Step 0: Create a ChromeStatus entry, and choose your feature type.
@@ -169,6 +170,10 @@ outside Google (new tooling is in progress).
 From this point on, the process changes a little depending on the type of
 feature you’re adding.
 
+<launch-setting name="sdo"
+  label="Has your feature reached at least the Candidate Recommendation stage at the W3C, Stage 3 at TC39, or an equivalent stage at another standards body?"></launch-setting>
+
+<conditional-section condition="sdo=no">
 ### For New Feature Incubations
 
 #### Step 1: Incubating: Write up use cases and scenarios in an explainer
@@ -241,6 +246,8 @@ developers will need them to try your feature out), and at least a basic sample.
 As soon as you have a functional and reasonably complete implementation of your
 initial design ready for developers to try out behind a flag, proceed to the
 next step.
+
+</conditional-section>
 
 #### Step 3: Feature Complete behind a feature flag: iteration on design
 
@@ -525,6 +532,10 @@ You will likely also need to land a Chromium CL to turn on the feature.
 Link to the blink-dev thread via the [Google Groups web interface](https://groups.google.com/a/chromium.org/g/blink-dev)
 in your CL's commit message to make it easy and clear to review.
 
+</conditional-section>
+
+<conditional-section condition="type=remove">
+
 ### Feature deprecations
 
 Deprecating/removing features creates a heavy burden for developers and users.
@@ -746,6 +757,9 @@ the resulting notification to blink-dev. Then repeat this step.
 Once it's clear that developers are no longer relying on the disabled feature,
 remove the code, and set the ChromeStatus to “Removed.”
 
+</conditional-section>
+
+<conditional-section condition="type=nochange">
 ### Web-developer-facing change to existing behavior
 
 #### Before you begin: Assess backwards compatibility
@@ -818,6 +832,8 @@ in your CL's commit message to make it easy and clear to review.
 
 You may wish to use [Finch](http://go/finch) to increase confidence in the new
 code as you deploy it.
+
+</conditional-section>
 
 ## Post Launch
 
