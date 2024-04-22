@@ -6,5 +6,5 @@ https://www.chromium.org/blink/launching-features/.
 For now, the best demonstration of the elements can be seen by running
 
 ```bash
-npm run storybook
+pnpm storybook
 ```
