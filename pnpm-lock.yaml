@@ -8,12 +8,15 @@ importers:
 
   .:
     dependencies:
-      '@lit/context':
-        specifier: ^1.1.1
-        version: 1.1.1
+      '@nanostores/lit':
+        specifier: ^0.2.1
+        version: 0.2.1(lit@3.1.3)(nanostores@0.10.3)
       lit:
         specifier: ^3.1.3
         version: 3.1.3
+      nanostores:
+        specifier: ^0.10.3
+        version: 0.10.3
     devDependencies:
       '@chromatic-com/storybook':
         specifier: ^1.3.3
@@ -1103,9 +1106,6 @@ packages:
   '@lit-labs/ssr-dom-shim@1.2.0':
     resolution: {integrity: sha512-yWJKmpGE6lUURKAaIltoPIE/wrbY3TEkqQt+X0m+7fQNnAv0keydnYvbiJFP1PnMhizmIWRWOG5KLhYyc/xl+g==}
 
-  '@lit/context@1.1.1':
-    resolution: {integrity: sha512-q/Rw7oWSJidUP43f/RUPwqZ6f5VlY8HzinTWxL/gW1Hvm2S5q2hZvV+qM8WFcC+oLNNknc3JKsd5TwxLk1hbdg==}
-
   '@lit/reactive-element@2.0.4':
     resolution: {integrity: sha512-GFn91inaUa2oHLak8awSIigYz0cU0Payr1rcFsrkf5OJ5eSPxElyZfKh0f2p9FsTiZWXQdWGJeXZICEfXXYSXQ==}
 
@@ -1114,6 +1114,12 @@ packages:
     peerDependencies:
       '@types/react': '>=16'
       react: '>=16'
+
+  '@nanostores/lit@0.2.1':
+    resolution: {integrity: sha512-PDntAVeZpYoBQroxQlOkB306gqalkz96z1ut+8YCtzP9RlPGhlwdvqZoHcNXl+UJ5qPmzeoDtlud8vKwDgm8vg==}
+    peerDependencies:
+      lit: ^2.6.0 || ^3.0.0
+      nanostores: ^0.7 || ^0.8 || ^0.9 || ^0.10
 
   '@ndelangen/get-tarball@3.0.9':
     resolution: {integrity: sha512-9JKTEik4vq+yGosHYhZ1tiH/3WpUS0Nh0kej4Agndhox8pAdWhEx5knFVRcb/ya9knCRCs1rPxNrSXTDdfVqpA==}
@@ -3697,6 +3703,10 @@ packages:
     engines: {node: ^10 || ^12 || ^13.7 || ^14 || >=15.0.1}
     hasBin: true
 
+  nanostores@0.10.3:
+    resolution: {integrity: sha512-Nii8O1XqmawqSCf9o2aWqVxhKRN01+iue9/VEd1TiJCr9VT5XxgPFbF1Edl1XN6pwJcZRsl8Ki+z01yb/T/C2g==}
+    engines: {node: ^18.0.0 || >=20.0.0}
+
   natural-compare@1.4.0:
     resolution: {integrity: sha512-OWND8ei3VtNC9h7V60qff3SVobHr996CTwgxubgyQYEpg290h9J0buyECNNJexkFm5sOajh5G116RYA1c8ZMSw==}
 
@@ -5917,10 +5927,6 @@ snapshots:
 
   '@lit-labs/ssr-dom-shim@1.2.0': {}
 
-  '@lit/context@1.1.1':
-    dependencies:
-      '@lit/reactive-element': 2.0.4
-
   '@lit/reactive-element@2.0.4':
     dependencies:
       '@lit-labs/ssr-dom-shim': 1.2.0
@@ -5930,6 +5936,11 @@ snapshots:
       '@types/mdx': 2.0.13
       '@types/react': 18.2.79
       react: 18.2.0
+
+  '@nanostores/lit@0.2.1(lit@3.1.3)(nanostores@0.10.3)':
+    dependencies:
+      lit: 3.1.3
+      nanostores: 0.10.3
 
   '@ndelangen/get-tarball@3.0.9':
     dependencies:
@@ -9296,6 +9307,8 @@ snapshots:
   nanocolors@0.2.13: {}
 
   nanoid@3.3.7: {}
+
+  nanostores@0.10.3: {}
 
   natural-compare@1.4.0: {}
 

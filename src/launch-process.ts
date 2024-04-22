@@ -1,7 +1,6 @@
-import { provide } from "@lit/context";
 import { LitElement, css, html } from "lit";
 import { customElement } from "lit/decorators.js";
-import { LaunchSettings, launchSettings } from "./launch-settings.js";
+import { dontKnowMessage } from "./launch-settings.js";
 
 @customElement("launch-process")
 export class LaunchProcess extends LitElement {
@@ -11,14 +10,19 @@ export class LaunchProcess extends LitElement {
     }
   `;
 
-  @provide({ context: launchSettings })
-  private settings = new LaunchSettings();
-
   connectedCallback() {
     super.connectedCallback();
-    this.settings.dontKnowMessage = this.querySelector(
-      ":host > template[slot=dontKnowMessage]"
+    const message = this.querySelector(
+      ":host > template[slot=dontKnowMessage]",
     );
+    if (message instanceof HTMLTemplateElement) {
+      dontKnowMessage.set(message);
+    }
+  }
+
+  disconnectedCallback(): void {
+    super.disconnectedCallback();
+    dontKnowMessage.set(undefined);
   }
 
   render() {

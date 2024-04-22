@@ -1,8 +1,8 @@
-import { consume } from "@lit/context";
-import { LitElement, css, html } from "lit";
-import { customElement, property } from "lit/decorators.js";
+import { StoreController } from "@nanostores/lit";
+import { LitElement, css, html, nothing } from "lit";
+import { customElement, property, state } from "lit/decorators.js";
 import { ref } from "lit/directives/ref.js";
-import { LaunchSettings, launchSettings } from "./launch-settings.js";
+import { dontKnowMessage, settings } from "./launch-settings.js";
 
 @customElement("launch-setting")
 export class LaunchSetting extends LitElement {
@@ -17,19 +17,24 @@ export class LaunchSetting extends LitElement {
   @property()
   default: string = "dontknow";
 
-  @consume({ context: launchSettings })
-  @property({ attribute: false })
-  private settings?: LaunchSettings;
+  private dontKnowMessageController = new StoreController(
+    this,
+    dontKnowMessage,
+  );
+
+  @state()
+  private value: string = this.default;
 
   onSelected(e: Event & { target: HTMLSelectElement }) {
-    if (this.name && this.settings) {
-      this.settings.setSetting(this.name, e.target.value as string);
+    this.value = e.target.value;
+    if (this.name) {
+      settings.setKey(this.name, this.value);
     }
   }
 
   selectChanged(elem: Element | undefined): void {
     if (elem instanceof HTMLSelectElement && this.name) {
-      const currentValue = this.settings?.setting(this.name) ?? this.default;
+      const currentValue = settings.get()[this.name] ?? this.default;
       for (const option of Array.from(elem.options)) {
         if (option.value === currentValue) {
           option.selected = true;
@@ -39,6 +44,10 @@ export class LaunchSetting extends LitElement {
   }
 
   render() {
+    if (!this.name) {
+      console.error(this, "is missing its name attribute");
+      return html``;
+    }
     return html`
       <label
         >${this.label}
@@ -54,6 +63,9 @@ export class LaunchSetting extends LitElement {
           </slot>
         </select></label
       >
+      ${this.value === "dontknow" && this.dontKnowMessageController.value
+        ? this.dontKnowMessageController.value.content.cloneNode(true)
+        : nothing}
     `;
   }
 }

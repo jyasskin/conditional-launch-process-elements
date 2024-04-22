@@ -1,7 +1,7 @@
-import { consume } from "@lit/context";
+import { StoreController } from "@nanostores/lit";
 import { LitElement, PropertyValues, css, html } from "lit";
 import { customElement, property, state } from "lit/decorators.js";
-import { LaunchSettings, launchSettings } from "./launch-settings.js";
+import { settings } from "./launch-settings.js";
 
 @customElement("conditional-section")
 export class ConditionalSection extends LitElement {
@@ -16,9 +16,6 @@ export class ConditionalSection extends LitElement {
     }
   `;
 
-  @property()
-  name: string | null = null;
-
   /**
    * Simple language of `setting=value`. This could get more complicated as we need more.
    *
@@ -27,15 +24,13 @@ export class ConditionalSection extends LitElement {
   @property()
   condition: string | null = null;
 
-  @consume({ context: launchSettings })
-  @property({ attribute: false })
-  private settings?: LaunchSettings;
-
   @state()
   settingName: string | null = null;
 
   @state()
   valueForShowing: string | null = null;
+
+  private settingsController = new StoreController(this, settings);
 
   willUpdate(changedProperties: PropertyValues<this>) {
     if (changedProperties.has("condition")) {
@@ -53,12 +48,13 @@ export class ConditionalSection extends LitElement {
 
   render() {
     let className = "dontknow";
-    if (this.name && this.settingName && this.valueForShowing) {
-      const settingValue = this.settings?.setting(this.settingName);
-      if (
-        settingValue !== "dontknow" &&
-        settingValue !== this.valueForShowing
-      ) {
+    if (this.settingName && this.valueForShowing) {
+      const settingValue = this.settingsController.value[this.settingName];
+      if (settingValue === "dontknow") {
+        className = "dontknow";
+      } else if (settingValue === this.valueForShowing) {
+        className = "";
+      } else {
         className = "hidden";
       }
     }
