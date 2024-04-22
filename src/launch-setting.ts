@@ -1,18 +1,12 @@
 import { consume } from "@lit/context";
-import "@shoelace-style/shoelace/dist/components/select/select.js";
-import SlSelect from "@shoelace-style/shoelace/dist/components/select/select.js";
 import { LitElement, css, html } from "lit";
 import { customElement, property } from "lit/decorators.js";
-import { ifDefined } from "lit/directives/if-defined.js";
+import { ref } from "lit/directives/ref.js";
 import { LaunchSettings, launchSettings } from "./launch-settings.js";
 
 @customElement("launch-setting")
 export class LaunchSetting extends LitElement {
-  static styles = css`
-    :host {
-      display: content;
-    }
-  `;
+  static styles = css``;
 
   @property()
   name: string | null = null;
@@ -27,23 +21,39 @@ export class LaunchSetting extends LitElement {
   @property({ attribute: false })
   private settings?: LaunchSettings;
 
-  onSelected(e: Event & { target: SlSelect }) {
+  onSelected(e: Event & { target: HTMLSelectElement }) {
     if (this.name && this.settings) {
       this.settings.setSetting(this.name, e.target.value as string);
     }
   }
 
+  selectChanged(elem: Element | undefined): void {
+    if (elem instanceof HTMLSelectElement && this.name) {
+      const currentValue = this.settings?.setting(this.name) ?? this.default;
+      for (const option of Array.from(elem.options)) {
+        if (option.value === currentValue) {
+          option.selected = true;
+        }
+      }
+    }
+  }
+
   render() {
-    return html`<sl-select
-      label=${ifDefined(this.label)}
-      value=${this.default}
-      @sl-input=${this.onSelected}
-    >
-      <slot>
-        <sl-option value="yes">Yes</sl-option>
-        <sl-option value="dontknow">I don't know yet</sl-option>
-        <sl-option value="no">No</sl-option>
-      </slot>
-    </sl-select>`;
+    return html`
+      <label
+        >${this.label}
+        <select
+          value=${this.default}
+          @input=${this.onSelected}
+          ${ref(this.selectChanged)}
+        >
+          <slot>
+            <option value="yes">Yes</option>
+            <option value="dontknow">I don't know yet</option>
+            <option value="no">No</option>
+          </slot>
+        </select></label
+      >
+    `;
   }
 }

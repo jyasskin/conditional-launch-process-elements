@@ -7,10 +7,9 @@ import { LaunchSettings, launchSettings } from "./launch-settings.js";
 export class ConditionalSection extends LitElement {
   static styles = css`
     .dontknow {
-      .unstable {
-        background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='290'><text transform='rotate(-45)' text-anchor='middle' font-family='sans-serif' font-weight='bold' font-size='70' y='210' opacity='.1'>Maybe</text></svg>");
-        background-repeat: repeat;
-      }
+      background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='290'><text transform='rotate(-45)' text-anchor='middle' font-family='sans-serif' font-weight='bold' font-size='50' y='120' opacity='.1'>Maybe</text></svg>");
+      background-repeat: repeat;
+      border: thin dashed red;
     }
     .hidden {
       display: none;

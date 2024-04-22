@@ -1,11 +1,18 @@
-// Replace your-framework with the framework you are using (e.g., react-webpack5, vue3-vite)
-import type { StorybookConfig } from '@web/storybook-framework-web-components';
+import type { StorybookConfig } from "@storybook/web-components-vite";
 
-export default {
-  framework: '@web/storybook-framework-web-components',
-  stories: ['../dist/stories/**/*.stories.{js,ts,md,mdx}'],
+const config: StorybookConfig = {
+  stories: ["../stories/**/*.stories.@(js|jsx|mjs|ts|tsx)"],
   addons: [
-    '@storybook/addon-essentials',
-    '@storybook/addon-links',
+    "@storybook/addon-links",
+    "@storybook/addon-essentials",
+    "@chromatic-com/storybook",
   ],
-} satisfies StorybookConfig;
+  framework: {
+    name: "@storybook/web-components-vite",
+    options: {},
+  },
+  docs: {
+    autodocs: "tag",
+  },
+};
+export default config;
