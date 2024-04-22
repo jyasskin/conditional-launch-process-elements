@@ -19,7 +19,7 @@ export const DefaultsToDontKnow: Story = {
 export const ShowsWhenSettingIsYes: Story = {
   render: () => html`
     <launch-process>
-      <launch-setting name="setting" label="Should the section show?"></launch-setting>
+      <launch-setting name="setting" label="Should the section show?" default="yes"></launch-setting>
       <conditional-section condition="setting=yes"
         >Section content</conditional-section
       >

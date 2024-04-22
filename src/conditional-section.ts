@@ -19,7 +19,8 @@ export class ConditionalSection extends LitElement {
   /**
    * Simple language of `setting=value`. This could get more complicated as we need more.
    *
-   * If the setting has a value of "dontknow", the section will be shown with a
+   * If the setting has a value of "dontknow", the section will be shown with a "maybe" background
+   * and dashed red border.
    */
   @property()
   condition: string | null = null;
@@ -46,8 +47,8 @@ export class ConditionalSection extends LitElement {
     }
   }
 
-  render() {
-    let className = "dontknow";
+  getPresentation(): "" | "dontknow" | "hidden" {
+    let className: "" | "dontknow" | "hidden" = "dontknow";
     if (this.settingName && this.valueForShowing) {
       const settingValue = this.settingsController.value[this.settingName];
       if (settingValue === "dontknow") {
@@ -58,7 +59,10 @@ export class ConditionalSection extends LitElement {
         className = "hidden";
       }
     }
+    return className;
+  }
 
-    return html`<div class=${className}><slot></slot></div>`;
+  render() {
+    return html`<div class=${this.getPresentation()}><slot></slot></div>`;
   }
 }

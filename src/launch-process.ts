@@ -10,13 +10,10 @@ export class LaunchProcess extends LitElement {
     }
   `;
 
-  connectedCallback() {
-    super.connectedCallback();
-    const message = this.querySelector(
-      ":host > template[slot=dontKnowMessage]",
-    );
-    if (message instanceof HTMLTemplateElement) {
-      dontKnowMessage.set(message);
+  static updateDontKnowMessage(e: Event & { target: HTMLSlotElement }) {
+    const templates = e.target.assignedElements({ flatten: true });
+    if (templates[0] instanceof HTMLTemplateElement) {
+      dontKnowMessage.set(templates[0]);
     }
   }
 
@@ -26,6 +23,10 @@ export class LaunchProcess extends LitElement {
   }
 
   render() {
-    return html`<slot></slot>`;
+    return html`<slot></slot
+      ><slot
+        name="dontKnowMessage"
+        @slotchange=${LaunchProcess.updateDontKnowMessage}
+      ></slot>`;
   }
 }

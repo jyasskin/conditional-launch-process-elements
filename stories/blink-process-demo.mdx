@@ -3,6 +3,10 @@ import "../src/index.ts";
 # Blink Launch Process
 
 <launch-process>
+<template slot="dontKnowMessage">
+  To figure this out, talk to your
+  <a href="https://www.chromium.org/blink/spec-mentors/">spec mentor</a>.
+</template>
 
 If you have concerns about your feature not fitting into this process, or any
 other questions, general concerns or discussion on this page or the process it
@@ -139,7 +143,6 @@ on an intent-to-ship and reduce the risk of having to redo parts of your design
 or implementation.
 
 <launch-setting name="type" label="If everything goes well, will web developers notice:">
-  <option value="dontknow">I don't know yet.</option>
   <option value="add">A new feature in the web platform</option>
   <option value="nochange">No change</option>
   <option value="remove">That a feature has been removed from the web platform</option>

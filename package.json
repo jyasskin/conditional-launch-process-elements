@@ -71,6 +71,7 @@
       "lit/no-classfield-shadowing": "off",
       "no-console": "off",
       "no-unused-vars": "off",
+      "prefer-destructuring": "off",
       "wc/guard-super-call": "off"
     }
   },
